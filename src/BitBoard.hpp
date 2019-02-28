@@ -8,6 +8,10 @@ std::unique_ptr<BitBoard> put(uint64_t,uint64_t,uint64_t);
 struct BitBoard{
 	uint64_t one;
 	uint64_t opp;
+	BitBoard(void){
+		this->one = 0x0000001008000000;
+		this->opp = 0x0000000810000000;
+	}
 	uint64_t stone(void){
 		return one | opp;
 	}
@@ -36,7 +40,7 @@ struct BitBoard{
 					break;
 				case NONE:
 				default:
-						break;
+					break;
 				}
 			}
 			
