@@ -94,9 +94,9 @@ BitBoard rotate_left(BitBoard base){
 inline uint8_t continuous_left(uint64_t board, uint64_t bb_pos){
 	uint64_t mask = 0xfefefefefefefefe;
 	uint8_t i = 0;
-	board = (board << 1) & mask;
+	board = (board& mask) << 1;
 	while( bb_pos & board ){
-		board = (board << 1) & mask;
+		board = (board & mask) << 1;
 		i++;
 	}
 	return i;
@@ -104,9 +104,9 @@ inline uint8_t continuous_left(uint64_t board, uint64_t bb_pos){
 inline uint8_t continuous_right(uint64_t board, uint64_t bb_pos){
 	uint64_t mask = 0x7f7f7f7f7f7f7f7f;
 	uint8_t i = 0;
-	board = (board >> 1) & mask;
+	board = (board & mask) >> 1;
 	while( bb_pos & board ){
-		board = (board >> 1) & mask;
+		board = (board & mask) >> 1;
 		i++;
 	}
 	return i;
@@ -114,9 +114,9 @@ inline uint8_t continuous_right(uint64_t board, uint64_t bb_pos){
 inline uint8_t continuous_down(uint64_t board, uint64_t bb_pos){
 	uint64_t mask = 0x00ffffffffffffff;
 	uint8_t i = 0;
-	board = (board >> 8) & mask;
+	board = (board & mask) >> 8;
 	while( bb_pos & board ){
-		board = (board >> 8) & mask;
+		board = (board & mask) >> 8;
 		i++;
 	}
 	return i;
@@ -124,9 +124,9 @@ inline uint8_t continuous_down(uint64_t board, uint64_t bb_pos){
 inline uint8_t continuous_up(uint64_t board, uint64_t bb_pos){
 	uint64_t mask = 0xffffffffffffff00;
 	uint8_t i = 0;
-	board = (board << 8) & mask;
+	board = (board & mask) << 8;
 	while( bb_pos & board ){
-		board = (board << 8) & mask;
+		board = (board & mask) << 8;
 		i++;
 	}
 	return i;
@@ -134,9 +134,9 @@ inline uint8_t continuous_up(uint64_t board, uint64_t bb_pos){
 inline uint8_t continuous_upperleft(uint64_t board, uint64_t bb_pos){
 	uint64_t mask = 0xfefefefefefefe00;
 	uint8_t i = 0;
-	board = (board << 9) & mask;
+	board = (board & mask) << 9;
 	while( bb_pos & board ){
-		board = (board << 9) & mask;
+		board = (board & mask) << 9;
 		i++;
 	}
 	return i;
@@ -145,9 +145,9 @@ inline uint8_t continuous_upperleft(uint64_t board, uint64_t bb_pos){
 inline uint8_t continuous_upperright(uint64_t board, uint64_t bb_pos){
 	uint64_t mask = 0x7f7f7f7f7f7f7f00;
 	uint8_t i = 0;
-	board = (board << 7) & mask;
+	board = (board & mask) << 7;
 	while( bb_pos & board ){
-		board = (board << 7) & mask;
+		board = (board & mask) << 7;
 		i++;
 	}
 	return i;
@@ -156,9 +156,9 @@ inline uint8_t continuous_upperright(uint64_t board, uint64_t bb_pos){
 inline uint8_t continuous_lowerleft(uint64_t board, uint64_t bb_pos){
 	uint64_t mask = 0x00fefefefefefefe;
 	uint8_t i = 0;
-	board = (board >> 7) & mask;
+	board = (board & mask) >> 7;
 	while( bb_pos & board ){
-		board = (board >> 7) & mask;
+		board = (board & mask) >> 7;
 		i++;
 	}
 	return i;
@@ -166,9 +166,9 @@ inline uint8_t continuous_lowerleft(uint64_t board, uint64_t bb_pos){
 inline uint8_t continuous_lowerright(uint64_t board, uint64_t bb_pos){
 	uint64_t mask = 0x007f7f7f7f7f7f7f;
 	uint8_t i = 0;
-	board = (board >> 9) & mask;
+	board = (board & mask) >> 9;
 	while( bb_pos & board ){
-		board = (board >> 9) & mask;
+		board = (board & mask) >> 9;
 		i++;
 	}
 	return i;
