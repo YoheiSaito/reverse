@@ -8,27 +8,27 @@ uint64_t inverse_last_8bit(uint64_t bits){
 }
 BitBoard rotate_right(BitBoard base){
 	BitBoard tmp;
-	tmp.opp = 0;
-	tmp.one = 0;
+	tmp.white = 0;
+	tmp.black = 0;
 	uint64_t wcols[8] = {
-		_bextr_u64(base.opp,  0, 8),
-		_bextr_u64(base.opp,  8, 8),
-		_bextr_u64(base.opp, 16, 8),
-		_bextr_u64(base.opp, 24, 8),
-		_bextr_u64(base.opp, 32, 8),
-		_bextr_u64(base.opp, 40, 8),
-		_bextr_u64(base.opp, 48, 8),
-		_bextr_u64(base.opp, 56, 8),
+		_bextr_u64(base.white,  0, 8),
+		_bextr_u64(base.white,  8, 8),
+		_bextr_u64(base.white, 16, 8),
+		_bextr_u64(base.white, 24, 8),
+		_bextr_u64(base.white, 32, 8),
+		_bextr_u64(base.white, 40, 8),
+		_bextr_u64(base.white, 48, 8),
+		_bextr_u64(base.white, 56, 8),
 	};
 	uint64_t bcols[8] = {
-		_bextr_u64(base.one,  0, 8),
-		_bextr_u64(base.one,  8, 8),
-		_bextr_u64(base.one, 16, 8),
-		_bextr_u64(base.one, 24, 8),
-		_bextr_u64(base.one, 32, 8),
-		_bextr_u64(base.one, 40, 8),
-		_bextr_u64(base.one, 48, 8),
-		_bextr_u64(base.one, 56, 8),
+		_bextr_u64(base.black,  0, 8),
+		_bextr_u64(base.black,  8, 8),
+		_bextr_u64(base.black, 16, 8),
+		_bextr_u64(base.black, 24, 8),
+		_bextr_u64(base.black, 32, 8),
+		_bextr_u64(base.black, 40, 8),
+		_bextr_u64(base.black, 48, 8),
+		_bextr_u64(base.black, 56, 8),
 	};
 	uint64_t dst_pdeps[8] = {
 		(BB_07 | BB_17 | BB_27 | BB_37 | BB_47 | BB_57 | BB_67 | BB_77),
@@ -42,36 +42,36 @@ BitBoard rotate_right(BitBoard base){
 	};
 
 	for(int i =0; i < 8; i++){
-		tmp.one |= _pdep_u64(bcols[i], dst_pdeps[i]);
-		tmp.opp |= _pdep_u64(wcols[i], dst_pdeps[i]);
+		tmp.black |= _pdep_u64(bcols[i], dst_pdeps[i]);
+		tmp.white |= _pdep_u64(wcols[i], dst_pdeps[i]);
 	}
 
 	return tmp;
 }
 BitBoard rotate_left(BitBoard base){
 	BitBoard tmp;
-	tmp.opp = 0;
-	tmp.one = 0;
+	tmp.white = 0;
+	tmp.black = 0;
 	uint64_t wcols[8] = {
-		inverse_last_8bit(_bextr_u64(base.opp,  0, 8)),
-		inverse_last_8bit(_bextr_u64(base.opp,  8, 8)),
-		inverse_last_8bit(_bextr_u64(base.opp, 16, 8)),
-		inverse_last_8bit(_bextr_u64(base.opp, 24, 8)),
-		inverse_last_8bit(_bextr_u64(base.opp, 32, 8)),
-		inverse_last_8bit(_bextr_u64(base.opp, 40, 8)),
-		inverse_last_8bit(_bextr_u64(base.opp, 48, 8)),
-		inverse_last_8bit(_bextr_u64(base.opp, 56, 8)),
+		inverse_last_8bit(_bextr_u64(base.white,  0, 8)),
+		inverse_last_8bit(_bextr_u64(base.white,  8, 8)),
+		inverse_last_8bit(_bextr_u64(base.white, 16, 8)),
+		inverse_last_8bit(_bextr_u64(base.white, 24, 8)),
+		inverse_last_8bit(_bextr_u64(base.white, 32, 8)),
+		inverse_last_8bit(_bextr_u64(base.white, 40, 8)),
+		inverse_last_8bit(_bextr_u64(base.white, 48, 8)),
+		inverse_last_8bit(_bextr_u64(base.white, 56, 8)),
 	
 	};
 	uint64_t bcols[8] = {
-		inverse_last_8bit(_bextr_u64(base.one,  0, 8)),
-		inverse_last_8bit(_bextr_u64(base.one,  8, 8)),
-		inverse_last_8bit(_bextr_u64(base.one, 16, 8)),
-		inverse_last_8bit(_bextr_u64(base.one, 24, 8)),
-		inverse_last_8bit(_bextr_u64(base.one, 32, 8)),
-		inverse_last_8bit(_bextr_u64(base.one, 40, 8)),
-		inverse_last_8bit(_bextr_u64(base.one, 48, 8)),
-		inverse_last_8bit(_bextr_u64(base.one, 56, 8)),
+		inverse_last_8bit(_bextr_u64(base.black,  0, 8)),
+		inverse_last_8bit(_bextr_u64(base.black,  8, 8)),
+		inverse_last_8bit(_bextr_u64(base.black, 16, 8)),
+		inverse_last_8bit(_bextr_u64(base.black, 24, 8)),
+		inverse_last_8bit(_bextr_u64(base.black, 32, 8)),
+		inverse_last_8bit(_bextr_u64(base.black, 40, 8)),
+		inverse_last_8bit(_bextr_u64(base.black, 48, 8)),
+		inverse_last_8bit(_bextr_u64(base.black, 56, 8)),
 	};
 	uint64_t dst_pdeps[8] = {
 		(BB_00 | BB_10 | BB_20 | BB_30 | BB_40 | BB_50 | BB_60 | BB_70),
@@ -85,8 +85,8 @@ BitBoard rotate_left(BitBoard base){
 	};
 
 	for(int i =0; i < 8; i++){
-		tmp.one |= _pdep_u64(bcols[i], dst_pdeps[i]);
-		tmp.opp |= _pdep_u64(wcols[i], dst_pdeps[i]);
+		tmp.black |= _pdep_u64(bcols[i], dst_pdeps[i]);
+		tmp.white |= _pdep_u64(wcols[i], dst_pdeps[i]);
 	}
 
 	return tmp;

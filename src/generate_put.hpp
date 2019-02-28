@@ -64,8 +64,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 	}
 
 	std::unique_ptr<BitBoard> after(new BitBoard);
-	after->one = self;
-	after->opp = enemy;
+	after->black = self;
+	after->white = enemy;
 	uint64_t len = 0;
 	bool putable = false;
 	if( (len = continuous_left(enemy, bb_pos)+1) > 1){
@@ -76,8 +76,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			for(uint64_t i = 0; i < len-1; i++){
 				mask |= (mask >>1);
 			}
-			after->one |= mask;
-			after->opp &= ~mask;
+			after->black |= mask;
+			after->white &= ~mask;
 
 		}
 	}
@@ -89,8 +89,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			for(uint64_t i = 0; i < len-1; i++){
 				mask |= (mask <<1);
 			}
-			after->one |= mask;
-			after->opp &= ~mask;
+			after->black |= mask;
+			after->white &= ~mask;
 
 		}
 	}
@@ -102,8 +102,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			for(uint64_t i = 0; i < len-1; i++){
 				mask |= (mask >>8);
 			}
-			after->one |= mask;
-			after->opp &= ~mask;
+			after->black |= mask;
+			after->white &= ~mask;
 	
 		}
 	}
@@ -115,8 +115,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			for(uint64_t i = 0; i < len-1; i++){
 				mask |= (mask <<8);
 			}
-			after->one |= mask;
-			after->opp &= ~mask;
+			after->black |= mask;
+			after->white &= ~mask;
 
 		}
 	}
@@ -128,8 +128,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			for(uint64_t i = 0; i < len-1; i++){
 				mask |= (mask <<7);
 			}
-			after->one |= mask;
-			after->opp &= ~mask;
+			after->black |= mask;
+			after->white &= ~mask;
 
 		}
 	}
@@ -141,8 +141,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			for(uint64_t i = 0; i < len-1; i++){
 				mask |= (mask <<9);
 			}
-			after->one |= mask;
-			after->opp &= ~mask;
+			after->black |= mask;
+			after->white &= ~mask;
 
 		}
 	}
@@ -154,8 +154,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			for(uint64_t i = 0; i < len-1; i++){
 				mask |= (mask >>9);
 			}
-			after->one |= mask;
-			after->opp &= ~mask;
+			after->black |= mask;
+			after->white &= ~mask;
 
 		}
 	}
@@ -167,8 +167,8 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			for(uint64_t i = 0; i < len-1; i++){
 				mask |= (mask >>7);
 			}
-			after->one |= mask;
-			after->opp &= ~mask;
+			after->black |= mask;
+			after->white &= ~mask;
 
 		}
 	}
@@ -176,4 +176,14 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 		return after;
 	}
 	return nullptr;
+}
+inline BitBoard_p put_black(BitBoard_p& b, uint64_t pos){
+	return (put(b->black, b->white, pos));
+}
+inline BitBoard_p put_white(BitBoard_p& b, uint64_t pos){
+	auto r = (put(b->white, b->black, pos));
+	int64_t tmp = r->white;
+	r->white = r->black;
+	r->black =  tmp;
+	return r;
 }

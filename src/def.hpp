@@ -7,6 +7,8 @@
 
 #include <immintrin.h>
 
+#include <boost/algorithm/string.hpp>
+
 
 constexpr uint64_t BB_00 = (1ll<<0);
 constexpr uint64_t BB_01 = (1ll<<1);
@@ -80,6 +82,8 @@ constexpr uint64_t BB_75 = (1ll<<61);
 constexpr uint64_t BB_76 = (1ll<<62);
 constexpr uint64_t BB_77 = (1ll<<63);
 
+struct BitBoard;
+using BitBoard_p = std::unique_ptr<BitBoard>;
 const uint64_t BBpos[8][8] = {
 	{BB_00, BB_01, BB_02, BB_03, BB_04, BB_05, BB_06, BB_07},
 	{BB_10, BB_11, BB_12, BB_13, BB_14, BB_15, BB_16, BB_17},
@@ -97,3 +101,4 @@ static const int WHITE = 2;
 #include "BitBoard.hpp"
 #include "BitBoardFunction.hpp"
 #include "generate_put.hpp"
+
