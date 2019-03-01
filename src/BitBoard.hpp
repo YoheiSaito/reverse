@@ -2,7 +2,7 @@
 #include "def.hpp"
 
 
-bool putable(uint64_t,uint64_t,uint64_t);
+bool placeable(uint64_t,uint64_t,uint64_t);
 BitBoard_p put(uint64_t,uint64_t,uint64_t);
 struct BitBoard{
 	uint64_t black;
@@ -28,12 +28,12 @@ struct BitBoard{
 				switch(turn){
 					bool p;
 				case BLACK:
-					p = putable(black, white, 1ll<<i);
+					p = placeable(black, white, 1ll<<i);
 					if(p)
 						bstr[i] = '*';
 					break;
 				case WHITE:
-					p = putable(white, black, 1ll<<i);
+					p = placeable(white, black, 1ll<<i);
 					if(p)
 						bstr[i] = '*';
 					break;
@@ -49,7 +49,7 @@ struct BitBoard{
 	}
 	void print(int turn = NONE){
 		std::string bstr = this->to_string(turn);
-		int i =0;
+		int i = 0;
 		std::cout << "     a   b   c   d   e   f   g   h" << std::endl;
 		std::cout << "   "  << std::string(33, '-') << std::endl;
 		for(auto&&c : bstr){

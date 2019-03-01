@@ -2,10 +2,16 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 #include <cinttypes>
 #include <chrono>
+#include <numeric>
+#include <iterator>
+#include <random>
+#include <algorithm>
 
 #include <immintrin.h>
+#include <stdint.h>
 
 #include <boost/algorithm/string.hpp>
 
@@ -94,11 +100,12 @@ const uint64_t BBpos[8][8] = {
 	{BB_60, BB_61, BB_62, BB_63, BB_64, BB_65, BB_66, BB_67},
 	{BB_70, BB_71, BB_72, BB_73, BB_74, BB_75, BB_76, BB_77},
 };
-static const int NONE  = 0;
-static const int BLACK = 1;
-static const int WHITE = 2;
+static const int NONE  =  1;
+static const int BLACK =  0;
+static const int WHITE = -1;
 
 #include "BitBoard.hpp"
 #include "BitBoardFunction.hpp"
 #include "generate_put.hpp"
-
+#include "evalation.hpp"
+#include "agent.hpp"
