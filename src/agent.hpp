@@ -7,6 +7,7 @@ struct Agent{
 	Agent(int turn){
 		_turn = turn;
 	}
+
 	int placeable_count(BitBoard_p& b){
 		auto s = b->to_string(_turn);
 		int i = 0;

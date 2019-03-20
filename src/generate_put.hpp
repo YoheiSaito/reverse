@@ -8,49 +8,49 @@ bool placeable( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 	uint64_t len = 0;
 	bool placeable = false;
 	if( (len = continuous_left(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos >> (len);
-		if(self & tmp_idx){
-			placeable = true;
-		}
-	}
-	if( (len = continuous_right(enemy, bb_pos)+1) > 1){
 		uint64_t tmp_idx = bb_pos << (len);
 		if(self & tmp_idx){
 			placeable = true;
 		}
 	}
-	if( (len = continuous_up(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos >> (len<<3);
+	if( (len = continuous_right(enemy, bb_pos)+1) > 1){
+		uint64_t tmp_idx = bb_pos >> (len);
 		if(self & tmp_idx){
 			placeable = true;
 		}
 	}
-	if( (len = continuous_down(enemy, bb_pos)+1) > 1){
+	if( (len = continuous_up(enemy, bb_pos)+1) > 1){
 		uint64_t tmp_idx = bb_pos << (len<<3);
 		if(self & tmp_idx){
 			placeable = true;
 		}
 	}
+	if( (len = continuous_down(enemy, bb_pos)+1) > 1){
+		uint64_t tmp_idx = bb_pos >> (len<<3);
+		if(self & tmp_idx){
+			placeable = true;
+		}
+	}
 	if( (len = continuous_lowerleft(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos << ((len<<3) - len);
+		uint64_t tmp_idx = bb_pos >> ((len<<3) - len);
 		if(self & tmp_idx){
 			placeable = true;
 		}
 	}
 	if( (len = continuous_lowerright(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos << ((len<<3) + len);
-		if(self & tmp_idx){
-			placeable = true;
-		}
-	}
-	if( (len = continuous_upperleft(enemy, bb_pos)+1) > 1){
 		uint64_t tmp_idx = bb_pos >> ((len<<3) + len);
 		if(self & tmp_idx){
 			placeable = true;
 		}
 	}
+	if( (len = continuous_upperleft(enemy, bb_pos)+1) > 1){
+		uint64_t tmp_idx = bb_pos << ((len<<3) + len);
+		if(self & tmp_idx){
+			placeable = true;
+		}
+	}
 	if( (len = continuous_upperright(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos >> ((len<<3) - len);
+		uint64_t tmp_idx = bb_pos << ((len<<3) - len);
 		if(self & tmp_idx){
 			placeable = true;
 		}
@@ -69,19 +69,6 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 	uint64_t len = 0;
 	bool placeable = false;
 	if( (len = continuous_left(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos >> (len);
-		if(self & tmp_idx){
-			placeable = true;
-			uint64_t mask = bb_pos;
-			for(uint64_t i = 0; i < len-1; i++){
-				mask |= (mask >>1);
-			}
-			after->black |= mask;
-			after->white &= ~mask;
-
-		}
-	}
-	if( (len = continuous_right(enemy, bb_pos)+1) > 1){
 		uint64_t tmp_idx = bb_pos << (len);
 		if(self & tmp_idx){
 			placeable = true;
@@ -94,20 +81,20 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 
 		}
 	}
-	if( (len = continuous_up(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos >> (len<<3);
+	if( (len = continuous_right(enemy, bb_pos)+1) > 1){
+		uint64_t tmp_idx = bb_pos >> (len);
 		if(self & tmp_idx){
 			placeable = true;
 			uint64_t mask = bb_pos;
 			for(uint64_t i = 0; i < len-1; i++){
-				mask |= (mask >>8);
+				mask |= (mask >>1);
 			}
 			after->black |= mask;
 			after->white &= ~mask;
-	
+
 		}
 	}
-	if( (len = continuous_down(enemy, bb_pos)+1) > 1){
+	if( (len = continuous_up(enemy, bb_pos)+1) > 1){
 		uint64_t tmp_idx = bb_pos << (len<<3);
 		if(self & tmp_idx){
 			placeable = true;
@@ -117,16 +104,29 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 			}
 			after->black |= mask;
 			after->white &= ~mask;
-
+	
 		}
 	}
-	if( (len = continuous_lowerleft(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos << ((len<<3) - len);
+	if( (len = continuous_down(enemy, bb_pos)+1) > 1){
+		uint64_t tmp_idx = bb_pos >> (len<<3);
 		if(self & tmp_idx){
 			placeable = true;
 			uint64_t mask = bb_pos;
 			for(uint64_t i = 0; i < len-1; i++){
-				mask |= (mask <<7);
+				mask |= (mask >>8);
+			}
+			after->black |= mask;
+			after->white &= ~mask;
+
+		}
+	}
+	if( (len = continuous_lowerleft(enemy, bb_pos)+1) > 1){
+		uint64_t tmp_idx = bb_pos >> ((len<<3) - len);
+		if(self & tmp_idx){
+			placeable = true;
+			uint64_t mask = bb_pos;
+			for(uint64_t i = 0; i < len-1; i++){
+				mask |= (mask >>7);
 			}
 			after->black |= mask;
 			after->white &= ~mask;
@@ -134,19 +134,6 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 		}
 	}
 	if( (len = continuous_lowerright(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos << ((len<<3) + len);
-		if(self & tmp_idx){
-			placeable = true;
-			uint64_t mask = bb_pos;
-			for(uint64_t i = 0; i < len-1; i++){
-				mask |= (mask <<9);
-			}
-			after->black |= mask;
-			after->white &= ~mask;
-
-		}
-	}
-	if( (len = continuous_upperleft(enemy, bb_pos)+1) > 1){
 		uint64_t tmp_idx = bb_pos >> ((len<<3) + len);
 		if(self & tmp_idx){
 			placeable = true;
@@ -159,13 +146,26 @@ std::unique_ptr<BitBoard> put( uint64_t self, uint64_t enemy, uint64_t bb_pos){
 
 		}
 	}
-	if( (len = continuous_upperright(enemy, bb_pos)+1) > 1){
-		uint64_t tmp_idx = bb_pos >> ((len<<3) - len);
+	if( (len = continuous_upperleft(enemy, bb_pos)+1) > 1){
+		uint64_t tmp_idx = bb_pos << ((len<<3) + len);
 		if(self & tmp_idx){
 			placeable = true;
 			uint64_t mask = bb_pos;
 			for(uint64_t i = 0; i < len-1; i++){
-				mask |= (mask >>7);
+				mask |= (mask <<9);
+			}
+			after->black |= mask;
+			after->white &= ~mask;
+
+		}
+	}
+	if( (len = continuous_upperright(enemy, bb_pos)+1) > 1){
+		uint64_t tmp_idx = bb_pos << ((len<<3) - len);
+		if(self & tmp_idx){
+			placeable = true;
+			uint64_t mask = bb_pos;
+			for(uint64_t i = 0; i < len-1; i++){
+				mask |= (mask <<7);
 			}
 			after->black |= mask;
 			after->white &= ~mask;

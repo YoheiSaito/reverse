@@ -92,84 +92,92 @@ BitBoard rotate_left(BitBoard base){
 	return tmp;
 }
 inline uint8_t continuous_left(uint64_t board, uint64_t bb_pos){
-	uint64_t mask = 0x7f7f7f7f7f7f7f7f;
-	uint8_t i = 0;
-	board = (board& mask) << 1;
+	int i = 0;
+	const uint64_t mask = 0x7e7e7e7e7e7e7e7e;
+	board = board&mask;
+	bb_pos <<= 1;
 	while( bb_pos & board ){
-		board = (board & mask) << 1;
+		bb_pos <<= 1;
 		i++;
 	}
 	return i;
 }
 inline uint8_t continuous_right(uint64_t board, uint64_t bb_pos){
-	uint64_t mask = 0xfefefefefefefefe;
-	uint8_t i = 0;
-	board = (board & mask) >> 1;
+	int i = 0;
+	const uint64_t mask = 0x7e7e7e7e7e7e7e7e;
+	board = board&mask;
+	bb_pos >>= 1;
 	while( bb_pos & board ){
-		board = (board & mask) >> 1;
 		i++;
+		bb_pos >>= 1;
 	}
 	return i;
 }
 inline uint8_t continuous_down(uint64_t board, uint64_t bb_pos){
-	uint64_t mask = 0xffffffffffffff00;
-	uint8_t i = 0;
-	board = (board & mask) >> 8;
+	const uint64_t mask = 0x00ffffffffffff00;
+	int i = 0;
+	board = board&mask;
+	bb_pos >>= 8;
 	while( bb_pos & board ){
-		board = (board & mask) >> 8;
+		bb_pos >>= 8;
 		i++;
 	}
 	return i;
 }
 inline uint8_t continuous_up(uint64_t board, uint64_t bb_pos){
-	uint64_t mask = 0x00ffffffffffffff;
-	uint8_t i = 0;
-	board = (board & mask) << 8;
+	const uint64_t mask = 0x00ffffffffffff00;
+	int i = 0;
+	board = board&mask;
+	bb_pos <<= 8;
 	while( bb_pos & board ){
-		board = (board & mask) << 8;
+		bb_pos <<= 8;
 		i++;
 	}
 	return i;
 }
 inline uint8_t continuous_upperleft(uint64_t board, uint64_t bb_pos){
-	uint64_t mask = 0x007f7f7f7f7f7f7f;
-	uint8_t i = 0;
-	board = (board & mask) << 9;
+	uint64_t mask = 0x007e7e7e7e7e7e00;
+	int i = 0;
+	board = board&mask;
+	bb_pos <<= 9;
 	while( bb_pos & board ){
-		board = (board & mask) << 9;
+		bb_pos <<= 9;
 		i++;
 	}
 	return i;
-
 }
 inline uint8_t continuous_upperright(uint64_t board, uint64_t bb_pos){
-	uint64_t mask = 0x00fefefefefefefe;
-	uint8_t i = 0;
-	board = (board & mask) << 7;
+	uint64_t mask = 0x007e7e7e7e7e7e00;
+	int i = 0;
+	board = board&mask;
+	bb_pos <<= 7;
 	while( bb_pos & board ){
-		board = (board & mask) << 7;
+		bb_pos <<= 7;
+		i++;
+	}
+	return i;
+}
+inline uint8_t continuous_lowerleft(uint64_t board, uint64_t bb_pos){
+	uint64_t mask = 0x007e7e7e7e7e7e00;
+	int i = 0;
+	board = board&mask;
+	bb_pos >>= 7;
+	while( bb_pos & board ){
+		bb_pos >>= 7;
 		i++;
 	}
 	return i;
 
 }
-inline uint8_t continuous_lowerleft(uint64_t board, uint64_t bb_pos){
-	uint64_t mask = 0xfefefefefefefe00;
-	uint8_t i = 0;
-	board = (board & mask) >> 7;
-	while( bb_pos & board ){
-		board = (board & mask) >> 7;
-		i++;
-	}
-	return i;
-}
 inline uint8_t continuous_lowerright(uint64_t board, uint64_t bb_pos){
-	uint64_t mask = 0x7f7f7f7f7f7f7f00;
-	uint8_t i = 0;
-	board = (board & mask) >> 9;
+	uint64_t mask = 0x007e7e7e7e7e7e00;
+	int i = 0;
+	board = board&mask;
+	bb_pos >>= 9;
 	while( bb_pos & board ){
-		board = (board & mask) >> 9;
+		bb_pos >>= 9;
 		i++;
 	}
 	return i;
+
 }

@@ -8,8 +8,8 @@ struct BitBoard{
 	uint64_t black;
 	uint64_t white;
 	BitBoard(void){
-		this->black = 0x0000001008000000;
-		this->white = 0x0000000810000000;
+		this->black = 0x0000000810000000;
+		this->white = 0x0000001008000000;
 	}
 	uint64_t stblack(void){
 		return black | white;
@@ -64,5 +64,17 @@ struct BitBoard{
 			i++;
 		}
 	}
+	int placeable_count(int turn){
+		auto s = to_string(turn);
+		int i = 0;
+		for(auto&& c : s){
+			if(c == '*'){
+				i++;
+			}
+		}
+		return i;
+	}
+
+
 };
 

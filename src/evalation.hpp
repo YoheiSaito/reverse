@@ -1,22 +1,16 @@
 #include "def.hpp"
+#include "evalpaser.hpp"
+
 const int evalation_table[8][8] = {
-	{30, 3,15,15,15,15, 3,30},
-	{ 3, 1, 4, 4, 4, 4, 1, 3},
-	{15, 4, 8, 8, 8, 8, 4,15},
-	{15, 4, 8, 6, 6, 8, 4,15},
-	{15, 4, 8, 6, 6, 8, 4,15},
-	{15, 4, 8, 8, 8, 8, 4,15},
-	{ 3, 1, 4, 4, 4, 4, 1, 3},
-	{30, 3,15,15,15,15, 3,30},
+	{50,-3,15,10,10,15,-3,50},
+	{-3,-5, 5, 1, 1, 5,-5,-3},
+	{15, 5, 8, 8, 8, 8, 5,15},
+	{10, 1, 8, 6, 6, 8, 1,10},
+	{10, 1, 8, 6, 6, 8, 1,10},
+	{15, 5, 8, 8, 8, 8, 5,15},
+	{-3,-5, 5, 1, 1, 5,-5,-3},
+	{50,-3,15,10,10,15,-3,50},
 };
-int32_t evalate(BitBoard_p& b){
-	int s = 0; 
-	for(int i = 0; i < 64; i++){
-		s += ((b->black >> i) &1 ) * evalation_table[i/8][i%8];
-		s -= ((b->white >> i) &1 ) * evalation_table[i/8][i%8];
-	}
-	return s;
-}
 inline int64_t popcount( int64_t bit){
 	bit = (( bit&0xAAAAAAAAAAAAAAAA) >> 1) + (bit&0x5555555555555555); //2
 	bit = (( bit&0xCCCCCCCCCCCCCCCC) >> 2) + (bit&0x3333333333333333); //4
@@ -29,11 +23,6 @@ inline int64_t popcount( int64_t bit){
 int32_t evalate_end(BitBoard_p& b){
 	int bc = popcount(b->black);
 	int wc = popcount(b->white);
-	if(bc > wc){
-		return INT32_MAX;
-	}else if (bc < wc){
-		return -INT32_MAX;
-	}
-	return 0;
+	return INT32_MAX/64*(bc-wc);
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "def.hpp"
+#include <unistd.h>
 
 using Evalate = std::pair<int64_t, int32_t>; 
 
@@ -13,21 +14,31 @@ struct ComputerAgent: public Agent{
 	BitBoard_p think(BitBoard_p& b){
 		b->print(_turn);
 		auto t = negaScout(b, maxdepth, _turn);
+		std::cout << t.second << std::endl;
+		/* sleep(1); */
 		return agent_put(b, t.first);
+
 	}
 	Evalate negaScout(BitBoard_p& bd, int depth, int turn,
 			int32_t a = -INT32_MAX, int32_t b = INT32_MAX){
 
 		if( (bd->black | bd->white) == 0xffffffffffffffff){
 			return std::make_pair(0, (_turn==BLACK)?evalate_end(bd):-evalate_end(bd));
+			/* return std::make_pair(0, evalate_end(bd)); */
 		}
 
 		PosVect ps = this->placeable_pos(bd, turn);
-
-		if(depth == 0|| ps.size()==0){
-			return std::make_pair(0, (_turn==BLACK)?evalate(bd):-evalate(bd));
+		if(ps.size()==0){
+			return std::make_pair(0, 
+					(_turn==BLACK)?
+						-INT32_MAX:
+						INT32_MAX);
 		}
-		// next board states  is ps
+		if(depth == 0){
+			return std::make_pair(0, (_turn==BLACK)?evalate(bd):-evalate(bd));
+			/* return std::make_pair(0, evalate(bd)); */
+		}
+		// next board states is ps
 		std::vector<BitBoard_p> next_node(ps.size());
 		if( turn == BLACK)
 			for(size_t i = 0; i < ps.size(); i++)
